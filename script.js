@@ -21,6 +21,8 @@ function generatePassword() {
   var charsSpecial = '!@#$%^&*()"'
   var charsNumeric = '0123456789';
   var passwordHolder = '';
+  var possiblechoices = '';
+  var randomDelta = 0
 
   //prompt user for a password length and verify it is a number between 8 and 128
   var passwordLength = prompt('Choose length of password between 8 and 128 characters:');
@@ -49,28 +51,72 @@ function generatePassword() {
     }
   }
 
+  if(wantsUpperCase){ 
+    possiblechoices += charsUpper;
+    passwordHolder += charsUpper[Math.floor(Math.random() * charsUpper.length)];
+    randomDelta++;
+  }
+  if(wantsLowerCase) {
+    possiblechoices += charsLower
+    passwordHolder += charsLower[Math.floor(Math.random() * charsLower.length)];
+    randomDelta++;
+  };
+  if(wantsNumeric) {
+    possiblechoices += charsNumeric;
+    passwordHolder += charsNumeric[Math.floor(Math.random() * charsNumeric.length)];
+    randomDelta++;
+  };
+  if(wantsSpecialCharacters) {
+    possiblechoices += charsSpecial
+    passwordHolder += charsSpecial[Math.floor(Math.random() * charsSpecial.length)];
+    randomDelta++;
+  };
 
+  for(i=0; i<passwordLength - randomDelta; i++) {
+    var randomNum = Math.floor(Math.random() * possiblechoices.length);
+    var randomChar = possiblechoices[randomNum];
+    passwordHolder += randomChar
+  }
+  console.log(passwordHolder);
+  const finishedPass = shufflerMaster4000(passwordHolder)
+  console.log(passwordHolder);
+  console.log(finishedPass);
 
   // If uppercase, create random upper case password
-  while (passwordHolder.length != passwordLength) {
-      if (wantsUpperCase) {
-        var randomNum = Math.floor(Math.random() * charsUpper.length);
-        passwordHolder += charsUpper.substring(randomNum, randomNum + 1);
-      }
-      if (wantsLowerCase) {
-        randomNum = Math.floor(Math.random() * charsLower.length);
-        passwordHolder+= charsLower.substring(randomNum, randomNum + 1);
-      }
-      if (wantsNumeric) {
-        randomNum = Math.floor(Math.random() * charsNumeric.length);
-        passwordHolder+= charsNumeric.substring(randomNum, randomNum + 1);
-      }
-      if (wantsSpecialCharacters) {
-        randomNum = Math.floor(Math.random() * charsSpecial.length);
-        passwordHolder+= charsSpecial.substring(randomNum, randomNum + 1);
-      }
-    }
+  // while (passwordHolder.length <= parseInt(passwordLength)) {
+  //     console.log(passwordHolder);
+  //     if (wantsUpperCase) {
+  //       var randomNum = Math.floor(Math.random() * charsUpper.length);
+  //       passwordHolder += charsUpper[randomNum];
+  //     }
+  //     if (passwordHolder.length == passwordLength) {
+  //       break;
+  //     }
+  //     if (wantsLowerCase) {
+  //       randomNum = Math.floor(Math.random() * charsLower.length);
+  //       passwordHolder+= charsLower[randomNum];
+  //     }
+  //     if (passwordHolder.length == passwordLength) {
+  //       break;
+  //     }
+  //     if (wantsNumeric) {
+  //       randomNum = Math.floor(Math.random() * charsNumeric.length);
+  //       passwordHolder+= charsNumeric[randomNum];
+  //     }
+  //     if (passwordHolder.length == passwordLength) {
+  //       break;
+  //     }
+  //     if (wantsSpecialCharacters) {
+  //       randomNum = Math.floor(Math.random() * charsSpecial.length);
+  //       passwordHolder+= charsSpecial[randomNum];
+  //     }
+  //   }
   
-    return passwordHolder;
+    return finishedPass;
   
+}
+
+function shufflerMaster4000(str) {
+  const shufflee = str.split('').sort(function() {return 0.5-Math.random()}).join('');
+  return shufflee
 }
